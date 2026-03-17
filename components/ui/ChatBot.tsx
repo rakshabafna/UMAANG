@@ -49,7 +49,7 @@ export function ChatBot() {
         return newMsgs;
       });
     }
-  }, [isOpen, currentLanguage, t]);
+  }, [isOpen, currentLanguage, t, messages.length]);
 
   const handleSendMessage = (e?: React.FormEvent) => {
     e?.preventDefault();

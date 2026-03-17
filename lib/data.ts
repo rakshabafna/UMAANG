@@ -8,6 +8,7 @@ export const childData = {
     {
       name: "Cognitive",
       percentage: 80,
+      monthlyDeltas: [2, 3, 2, 4],
       status: "On Track",
       milestones: [
         "Recognizes 6 colors",
@@ -17,6 +18,7 @@ export const childData = {
     {
       name: "Language",
       percentage: 65,
+      monthlyDeltas: [3, 4, 6, 8],
       status: "Needs Attention",
       milestones: [
         "Speaks approximately 12 words",
@@ -26,12 +28,14 @@ export const childData = {
     {
       name: "Motor Skills",
       percentage: 78,
+      monthlyDeltas: [5, 6, 4, -1],
       status: "On Track",
       milestones: ["Walks independently", "Stacks 4 blocks"],
     },
     {
       name: "Social-Emotional",
       percentage: 70,
+      monthlyDeltas: [2, 2, 1, 2],
       status: "On Track",
       milestones: [
         "Waves goodbye",
@@ -180,7 +184,40 @@ export const trainingModules = [
       "Using assessment forms",
       "AI-assisted observation tips",
     ],
-    progress: 0,
+    progress: 75,
+  },
+];
+
+export const engagementData = [
+  {
+    parentName: "Priya Sharma",
+    childName: "Aarav",
+    scores: [3, 3, 3, 3], 
+  },
+  {
+    parentName: "Sunita Patil",
+    childName: "Meera",
+    scores: [3, 2, 1, 0],
+  },
+  {
+    parentName: "Rajesh Desai",
+    childName: "Rohan",
+    scores: [1, 3, 2, 1],
+  },
+  {
+    parentName: "Kavita More",
+    childName: "Ananya",
+    scores: [0, 0, 1, 0],
+  },
+  {
+    parentName: "Meena Kulkarni",
+    childName: "Dev",
+    scores: [2, 2, 2, 3],
+  },
+  {
+    parentName: "Farida Sheikh",
+    childName: "Sana",
+    scores: [3, 1, 2, 2],
   },
 ];
 

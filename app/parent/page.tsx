@@ -6,6 +6,8 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
 import { useAppContext } from "@/context/AppContext";
 import { useTranslation } from "@/lib/i18n";
+import { VelocityCard } from "@/components/ui/VelocityCard";
+import { childData } from "@/lib/data";
 
 export default function ParentPage() {
   const [activeTab, setActiveTab] = useState("home");
@@ -89,7 +91,10 @@ export default function ParentPage() {
                       </p>
                     </div>
                   </div>
-                  <button className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2">
+                  <button 
+                    onClick={() => setActiveTab("activities")}
+                    className="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
+                  >
                     {t("view_recommendations")}
                     <span className="material-symbols-outlined text-sm">arrow_forward</span>
                   </button>
@@ -225,6 +230,55 @@ export default function ParentPage() {
                   </div>
                 </div>
               </div>
+
+              {/* SUMMARY ROW */}
+              <div className="bg-[#FFF8F0] p-4 rounded-xl shadow-sm border border-[#9f512d]/10 mb-6">
+                <h3 className="text-sm font-bold text-[#6B3A2A] mb-3">Aarav&apos;s Growth This Month</h3>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {childData.domains.map((domain, i) => {
+                    const latest = domain.monthlyDeltas?.[domain.monthlyDeltas.length - 1] || 0;
+                    const prev = domain.monthlyDeltas?.[domain.monthlyDeltas.length - 2] || 0;
+                    
+                    let trendColor = "text-blue-500";
+                    let arrow = "arrow_forward";
+                    if (latest <= 0) {
+                      trendColor = "text-red-500";
+                      arrow = "arrow_downward";
+                    } else if (latest >= prev + 1) {
+                      trendColor = "text-emerald-500";
+                      arrow = "arrow_upward";
+                    } else if (latest < prev - 1 && latest > 0) {
+                      trendColor = "text-amber-500";
+                      arrow = "trending_flat";
+                    }
+
+                    return (
+                      <div key={i} className="flex items-center gap-2 bg-white/60 px-3 py-2 rounded-lg border border-[#9f512d]/5">
+                        <span className="text-xs font-bold text-slate-700 truncate flex-1">{domain.name}</span>
+                        <div className={`flex items-center ${trendColor} font-bold text-xs shrink-0`}>
+                          <span className="material-symbols-outlined text-[14px] leading-none">{arrow}</span>
+                          <span className="leading-none">{latest > 0 ? "+" : ""}{latest}%</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* DOMAINS GRID (Replace existing bars with VelocityCards) */}
+              <h3 className="text-xl font-bold text-slate-800 mt-8 mb-4">Developmental Domains</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {childData.domains.map((domain, i) => (
+                  <VelocityCard 
+                    key={i} 
+                    domainName={domain.name} 
+                    percentage={domain.percentage} 
+                    monthlyDeltas={domain.monthlyDeltas || []} 
+                    compact={false} 
+                  />
+                ))}
+              </div>
+
             </section>
           )}
 

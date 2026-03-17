@@ -4,6 +4,9 @@ import { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
+import { VelocityCard } from "@/components/ui/VelocityCard";
+import { EngagementHeatmap } from "@/components/ui/EngagementHeatmap";
+import { childData, engagementData } from "@/lib/data";
 
 const tabs = [
   { id: "overview", label: "Overview", icon: "dashboard" },
@@ -132,6 +135,41 @@ export default function AdminPage() {
                 </div>
               </div>
 
+              {/* Family Engagement Heatmap */}
+              <div className="w-full mt-2">
+                <EngagementHeatmap families={engagementData} />
+              </div>
+
+              {/* Child Growth Velocity Overview Card */}
+              <div className="bg-white rounded-2xl shadow-sm border border-[#A0522D]/5 flex flex-col overflow-hidden">
+                <div className="p-6 border-b border-[#A0522D]/5 flex justify-between items-center">
+                  <div>
+                    <h4 className="text-lg font-bold text-[#6B3A2A] flex items-center gap-2">
+                      Aarav Sharma — Growth Velocity
+                      <span className="bg-indigo-100 text-indigo-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[12px]">auto_awesome</span> AI-Powered
+                      </span>
+                    </h4>
+                  </div>
+                </div>
+                <div className="flex flex-col px-6 pb-2">
+                  {childData.domains.map((domain, i) => (
+                    <VelocityCard 
+                      key={i} 
+                      domainName={domain.name} 
+                      percentage={domain.percentage} 
+                      monthlyDeltas={domain.monthlyDeltas || []} 
+                      compact={true} 
+                    />
+                  ))}
+                </div>
+                <div className="p-4 bg-slate-50 border-t border-slate-100">
+                  <p className="text-xs text-slate-400 italic">
+                    Velocity is calculated from monthly milestone assessment data. Declining domains are automatically flagged for volunteer review.
+                  </p>
+                </div>
+              </div>
+
               {/* AI Flags Table */}
               <div className="bg-white rounded-2xl shadow-sm border border-[#A0522D]/5 overflow-hidden">
                 <div className="p-6 border-b border-[#A0522D]/5 flex justify-between items-center">
@@ -151,6 +189,7 @@ export default function AdminPage() {
                         <th className="px-6 py-4 text-xs font-bold text-[#6B3A2A]/60 uppercase tracking-wider">Child Name</th>
                         <th className="px-6 py-4 text-xs font-bold text-[#6B3A2A]/60 uppercase tracking-wider">Risk Level</th>
                         <th className="px-6 py-4 text-xs font-bold text-[#6B3A2A]/60 uppercase tracking-wider">Primary Domain</th>
+                        <th className="px-6 py-4 text-xs font-bold text-[#6B3A2A]/60 uppercase tracking-wider">Velocity</th>
                         <th className="px-6 py-4 text-xs font-bold text-[#6B3A2A]/60 uppercase tracking-wider">Recommended Action</th>
                       </tr>
                     </thead>
@@ -159,18 +198,21 @@ export default function AdminPage() {
                         <td className="px-6 py-4 font-semibold text-sm">Aarav Sharma</td>
                         <td className="px-6 py-4"><span className="px-3 py-1 bg-[#F59E0B]/10 text-[#F59E0B] text-xs font-bold rounded-full">Medium</span></td>
                         <td className="px-6 py-4 text-sm">Language</td>
+                        <td className="px-6 py-4 text-sm font-bold text-amber-500 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">arrow_upward</span>+8% Language</td>
                         <td className="px-6 py-4 text-sm italic text-slate-500">Increase reading sessions x2</td>
                       </tr>
                       <tr className="hover:bg-[#A0522D]/5 transition-colors">
                         <td className="px-6 py-4 font-semibold text-sm">Meera Patil</td>
                         <td className="px-6 py-4"><span className="px-3 py-1 bg-[#DC2626]/10 text-[#DC2626] text-xs font-bold rounded-full">High</span></td>
                         <td className="px-6 py-4 text-sm">Cognitive</td>
+                        <td className="px-6 py-4 text-sm font-bold text-red-600 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">arrow_downward</span>-1% Motor</td>
                         <td className="px-6 py-4 text-sm italic text-slate-500">Schedule specialist review</td>
                       </tr>
                       <tr className="hover:bg-[#A0522D]/5 transition-colors">
                         <td className="px-6 py-4 font-semibold text-sm">Rohan Desai</td>
                         <td className="px-6 py-4"><span className="px-3 py-1 bg-[#7B9E87]/10 text-[#7B9E87] text-xs font-bold rounded-full">Low</span></td>
                         <td className="px-6 py-4 text-sm">Social</td>
+                        <td className="px-6 py-4 text-sm font-bold text-emerald-600 flex items-center gap-1"><span className="material-symbols-outlined text-[14px]">arrow_upward</span>+3% All</td>
                         <td className="px-6 py-4 text-sm italic text-slate-500">Continue current track</td>
                       </tr>
                     </tbody>
